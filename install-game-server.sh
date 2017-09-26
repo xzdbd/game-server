@@ -4,15 +4,14 @@ export PATH
 #===============================================================================================
 #   System Required:  CentOS Debian or Ubuntu (32bit/64bit)
 #   Description:  Install Game-Server(XiaoBao) for CentOS Debian or Ubuntu
-#   Author: Clang <admin@clangcn.com>
-#   Intro:  http://clang.cn
+#   Author: xzdbd
 #===============================================================================================
 version="7.2"
 str_game_dir="/usr/local/game-server"
-game_x64_download_url=https://raw.githubusercontent.com/clangcn/game-server/master/latest/game-server
-game_x86_download_url=https://raw.githubusercontent.com/clangcn/game-server/master/latest/game-server-386
-program_init_download_url=https://raw.githubusercontent.com/clangcn/game-server/master/init/game-server.init
-str_install_shell=https://raw.githubusercontent.com/clangcn/game-server/master/install-game-server.sh
+game_x64_download_url=https://raw.githubusercontent.com/xzdbd/game-server/master/latest/game-server
+game_x86_download_url=https://raw.githubusercontent.com/xzdbd/game-server/master/latest/game-server-386
+program_init_download_url=https://raw.githubusercontent.com/xzdbd/game-server/master/init/game-server.init
+str_install_shell=https://raw.githubusercontent.com/xzdbd/game-server/master/install-game-server.sh
 shell_update(){
     clear
     fun_clang.cn
@@ -161,9 +160,11 @@ fun_input_port(){
     server_port="8838"
     echo ""
     echo -e "Please input Server Port [1-65535](Don't the same SSH Port ${COLOR_RED}${sshport}${COLOR_END})"
-    read -p "(Default Server Port: ${server_port}):" serverport
+    # read -p "(Default Server Port: ${server_port}):" serverport
+    serverport=$SERVERPORT
     [ -z "${serverport}" ] && serverport="${server_port}"
     fun_check_port "${serverport}"
+    echo "serverport set to ${serverport}" 
 }
 
 # Random password
@@ -221,22 +222,26 @@ pre_install_clang(){
     fun_input_port
     echo ""
     shadowsocks_pwd=`fun_randstr`
-    read -p "Please input Password (Default Password: ${shadowsocks_pwd}):" shadowsockspwd
+    # read -p "Please input Password (Default Password: ${shadowsocks_pwd}):" shadowsockspwd
+    shadowsockspwd=$PASSWORD
     if [ "${shadowsockspwd}" = "" ]; then
         shadowsockspwd="${shadowsocks_pwd}"
     fi
     echo ""
     ssmethod="chacha20"
     echo "Please input Encryption method(chacha20-ierf, chacha20, aes-256-cfb, bf-cfb, des-cfb, rc4)"
-    read -p "(Default method: ${ssmethod}):" ssmethod
+    # read -p "(Default method: ${ssmethod}):" ssmethod
+    ssmethod=$METHOD
+
     if [ "${ssmethod}" = "" ]; then
         ssmethod="chacha20"
     fi
+    echo "ssmethod set to ${ssmethod}"
     echo ""
     set_iptables="n"
         echo  -e "${COLOR_YELOW}Do you want to set iptables?${COLOR_END}"
-        read -p "(if you want please input: y,Default [no]):" set_iptables
-
+        # read -p "(if you want please input: y,Default [no]):" set_iptables
+        set_iptables="n"
         case "${set_iptables}" in
         y|Y|Yes|YES|yes|yES|yEs|YeS|yeS)
         echo "You will set iptables!"
@@ -262,7 +267,7 @@ pre_install_clang(){
     echo ""
     echo "Press any key to start...or Press Ctrl+c to cancel"
 
-    char=`get_char`
+    # char=`get_char`
 
     [ ! -d ${str_game_dir} ] && mkdir -p ${str_game_dir}
     cd ${str_game_dir}

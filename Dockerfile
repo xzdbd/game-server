@@ -5,7 +5,8 @@ ENV PASSWORD=password
 ENV METHOD=aes-256-cfb
 
 ADD https://raw.githubusercontent.com/xzdbd/game-server/master/install-game-server.sh /opt/install-game-server.sh
-RUN chmod +x /opt/install-game-server.sh &&\
+RUN apt-get update &&\
+    chmod +x /opt/install-game-server.sh &&\
     /opt/install-game-server.sh install
 
 EXPOSE $SERVERPORT

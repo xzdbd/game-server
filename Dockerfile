@@ -6,8 +6,8 @@ ENV METHOD=aes-256-cfb
 
 ADD https://raw.githubusercontent.com/xzdbd/game-server/master/install-game-server.sh /opt/install-game-server.sh
 RUN apt-get update
-RUN chmod +x /opt/install-game-server.sh
-RUN /opt/install-game-server.sh install
+RUN chmod +x /opt/install-game-server.sh 
+RUN /opt/install-game-server.sh install && /etc/init.d/game-server stop
 
 EXPOSE $SERVERPORT
-CMD tail -f /usr/local/game-server/game-server.log
+CMD /usr/local/game-server/game-server -c /usr/local/game-server/config.json

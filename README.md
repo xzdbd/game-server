@@ -9,6 +9,7 @@ Game-Server
 
 1. Prepare a config.json file
 
+```
     {
         "server":"0.0.0.0",
         "local_port":1080,
@@ -25,10 +26,13 @@ Game-Server
             "port2": "desc2"
         }
     }
+```
 
 2. Run 
 
 ```
-docker run -d -p {port}:{port} -p {port}:{port}/udp -v {local_path}/config.json:/usr/local/game-server/config.json xzdbd/game-server
+docker run -d -p {port}:{port} -p {port}:{port}/udp \
+-v {local_path}/config.json:/usr/local/game-server/config.json \
+xzdbd/game-server
 
 ```

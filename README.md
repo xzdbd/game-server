@@ -5,7 +5,7 @@ Game-Server
 
 ------
 
-### Use It in Docker Environment
+### Use it in Docker Environment
 
 1. Prepare a config.json file
 
